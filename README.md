@@ -217,7 +217,7 @@ SmartBuddy помогает новичкам и трейдерам быстро 
 
 ## 👨‍💻 Автор и поддержка
 
-Telegram: [@uyrivihodnoy](https://t.me/uyrivihodnoy)
+Telegram: [@OxPrecision](https://t.me/OxPrecision)
 
 ---
 
