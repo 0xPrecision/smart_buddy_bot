@@ -234,3 +234,7 @@ Telegram: [@OxPrecision](https://t.me/OxPrecision)
 Проект распространяется под лицензией MIT. Подробнее см. файл [LICENSE](./LICENSE).
 
 **Удачи в анализе Solana-кошельков с SmartBuddy! 🚀**
+
+---
+
+© 2025 Nikita OxPrecision. All rights reserved.
