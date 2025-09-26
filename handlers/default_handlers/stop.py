@@ -7,17 +7,17 @@ from states.state import waiting_for_address, pending_address
 @bot.message_handler(commands=["stop"])
 def handle_stop(message: Message) -> None:
     """
-    Обрабатывает команду /stop.
-    Останавливает все ожидающие сценарии пользователя: сбрасывает состояние ожидания,
-    очищает временные данные, останавливает таймер и уведомляет пользователя об успешной отмене действия.
-
+    Handles the /stop command.
+    Stops all pending user scenarios: resets waiting state,
+    clears temporary data, stops the timer, and notifies the user of successful cancellation.
+    
     Args:
-        message (telebot.types.Message): Сообщение Telegram от пользователя.
-
+    message (telebot.types.Message): Telegram message from the user.
+    
     Notes:
-        - Если для пользователя был активен процесс (ожидание ввода), он сбрасывается.
-        - Если нет активных процессов — пользователь получает соответствующее уведомление.
-    """
+    - If a process was active for the user (waiting for input), it is reset.
+    - If no processes are active, the user receives the corresponding notification.
+	"""
     user_id = message.from_user.id
     chat_id = message.chat.id
 

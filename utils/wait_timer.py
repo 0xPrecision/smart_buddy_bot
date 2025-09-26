@@ -11,14 +11,14 @@ def start_waiting_timer(
     on_timeout: Callable[[int, int], None],
 ) -> None:
     """
-    Запускает таймер ожидания для пользователя. Если таймер уже был запущен для этого пользователя, он будет отменён.
-
+    Starts a waiting timer for the user. If a timer was already running for this user, it will be canceled.
+    
     Args:
-        user_id (int): Telegram ID пользователя.
-        chat_id (int): ID чата, в котором идёт диалог.
-        timeout (float): Время ожидания в секундах.
-        on_timeout (Callable[[int, int], None]): Функция, вызываемая при истечении таймера, с аргументами user_id и chat_id.
-    """
+    user_id (int): Telegram user ID.
+    chat_id (int): Chat ID where the dialog is taking place.
+    timeout (float): Waiting time in seconds.
+    on_timeout (Callable[[int, int], None]): Function called when the timer expires, with user_id and chat_id as arguments.
+	"""
     if timers.get(user_id):
         timers[user_id].cancel()
 
@@ -29,11 +29,11 @@ def start_waiting_timer(
 
 def cancel_timer(user_id: int) -> None:
     """
-    Отменяет таймер ожидания для пользователя, если он был запущен.
-
+    Cancels the waiting timer for the user, if one was running.
+    
     Args:
-        user_id (int): Telegram ID пользователя.
-    """
+    user_id (int): Telegram user ID.
+	"""
     if timers.get(user_id):
         timers[user_id].cancel()
         timers.pop(user_id, None)

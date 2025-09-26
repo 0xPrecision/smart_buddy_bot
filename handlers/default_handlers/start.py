@@ -7,16 +7,16 @@ from keyboards.inline.help_button import gen_markup
 @bot.message_handler(commands=["start"])
 def send_welcome(message: Message) -> None:
     """
-    Обрабатывает команду /start.
-    Регистрирует пользователя в базе данных (если такого ещё нет) и отправляет приветственное сообщение с inline-кнопкой.
-
+    Handles the /start command.
+    Registers the user in the database (if not already present) and sends a welcome message with an inline button.
+    
     Args:
-        message (telebot.types.Message): Сообщение Telegram от пользователя.
-
+    message (telebot.types.Message): Telegram message from the user.
+    
     Notes:
-        - User.get_or_create() гарантирует, что пользователь будет добавлен только один раз.
-        - После /start пользователь сразу видит кнопку для перехода к справке.
-    """
+    - User.get_or_create() ensures the user is added only once.
+    - After /start the user immediately sees a button to go to help.
+	"""
     telegram_id = message.from_user.id
     user, created = User.get_or_create(telegram_id=telegram_id)
 

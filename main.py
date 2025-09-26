@@ -1,10 +1,3 @@
-"""
-main.py
-Главная точка входа для Telegram-бота анализа Solana-кошельков.
-
-Импортирует все обработчики команд, состояний и запускает polling.
-"""
-
 import logging
 
 from database.common.models import db, User, Analysis
@@ -28,8 +21,8 @@ from utils.wait_timer import start_waiting_timer, cancel_timer
 
 def main() -> None:
     """
-    Точка входа в приложение. Запускает polling для обработки сообщений.
-    """
+    Entry point of the application. Starts polling for processing messages.
+	"""
     # Автоматически создаём таблицы, если их нет
     with db:
         db.create_tables([User, Analysis], safe=True)

@@ -6,12 +6,12 @@ from database.common.models import User, Analysis
 @bot.message_handler(commands=["clear_history"])
 def clear_history(message: Message) -> None:
     """
-    Обрабатывает команду /clear_history.
-    Удаляет все записи анализа пользователя из базы данных и уведомляет пользователя о результате.
-
+    Handles the /clear_history command.
+    Deletes all of the user's analysis records from the database and notifies the user of the result.
+    
     Args:
-        message (telebot.types.Message): Входящее сообщение Telegram от пользователя.
-    """
+    message (telebot.types.Message): Incoming Telegram message from the user.
+	"""
     user_id = message.from_user.id
     user = User.get_or_none(telegram_id=user_id)
     if not user:

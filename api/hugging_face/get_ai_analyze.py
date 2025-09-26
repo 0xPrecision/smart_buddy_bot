@@ -7,15 +7,16 @@ from telebot.types import Message
 
 def mixtral_hf_analysis(prompt: str, message: Message = None) -> str | None:
     """
-    Отправляет текстовый запрос (prompt) в Hugging Face (Mixtral 8x7B) и возвращает сгенерированный ответ.
-
+    Sends a text query (prompt) to Hugging Face (Mixtral 8x7B) and returns the generated response.
+    
     Args:
-        prompt (str): Текстовый промт для языковой модели.
-        message (Message, optional): Объект сообщения Telegram для уведомления пользователя об ошибках.
-
+    prompt (str): Prompt text for the language model.
+    message (Message, optional): Telegram message object for notifying the user about errors.
+    
     Returns:
-        str | None: Сгенерированный моделью ответ или None в случае ошибки.
-    """
+    str | None: Generated response from the model or None in case of error.
+    Escape same triple quote inside body to avoid prematurely closing.
+	"""
     api_token = HUGGING_FACE_TOKEN
     chat_id = message.chat.id if message else None
 

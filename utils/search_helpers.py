@@ -8,13 +8,13 @@ from utils.misc.constants import END_TEXT
 
 def process_search_query(message: Message) -> None:
     """
-    Обрабатывает запрос пользователя на поиск анализа по адресу кошелька или никнейму.
-    Получает историю анализов, выводит их по одному. Если истории нет — сообщает об этом.
-    Завершает сессию пользователя.
-
+    Handles a user request to search for an analysis by wallet address or nickname.
+    Retrieves the analysis history and displays them one by one. If no history is found, informs the user.
+    Ends the user's session.
+    
     Args:
-        message (Message): Объект сообщения Telegram, инициировавший поиск.
-    """
+    message (Message): Telegram message object that initiated the search.
+	"""
     user_id = message.from_user.id
     chat_id = message.chat.id
     state = waiting_for_address.get(user_id)

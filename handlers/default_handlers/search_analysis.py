@@ -9,17 +9,17 @@ from states.state import waiting_for_address
 @bot.message_handler(commands=["search_analysis"])
 def ask_for_address_or_nickname(message: Message) -> None:
     """
-    Обрабатывает команду /search_analysis.
-    Переводит пользователя в состояние ожидания ввода адреса или никнейма для поиска анализа.
-    Запускает таймер ожидания.
-
+    Handles the /search_analysis command.
+    Switches the user to the state of waiting for address or nickname input for analysis search.
+    Starts a timeout timer.
+    
     Args:
-        message (telebot.types.Message): Сообщение Telegram от пользователя.
-
+    message (telebot.types.Message): Telegram message from the user.
+    
     Notes:
-        - После вызова этой команды бот ожидает ввода адреса или никнейма для поиска анализа.
-        - Если пользователь не введёт данные за отведённое время, будет вызвана функция on_timeout.
-    """
+    - After this command, the bot waits for address or nickname input for analysis search.
+    - If the user does not provide data within the allotted time, the on_timeout function will be called.
+	"""
     user_id = message.from_user.id
     chat_id = message.chat.id
     waiting_for_address[user_id] = "search_query"

@@ -8,14 +8,14 @@ from config_data.env import HELIUS_API_KEY
 
 def get_transactions(address: str) -> List[dict]:
     """
-    Получает последние транзакции Solana-кошелька через Helius API.
-
+    Retrieves the latest transactions of a Solana wallet via the Helius API.
+    
     Args:
-        address (str): Адрес Solana-кошелька.
-
+    address (str): Solana wallet address.
+    
     Returns:
-        list[dict]: Список транзакций в формате, возвращаемом Helius API.
-    """
+    list[dict]: List of transactions in the format returned by the Helius API.
+	"""
     url = f"https://api.helius.xyz/v0/addresses/{address}/transactions"
     # в limit указывается количество транзакций для анализа (максимум 100)
     querystring = {"api-key": HELIUS_API_KEY, "limit": "100"}
@@ -26,14 +26,14 @@ def get_transactions(address: str) -> List[dict]:
 
 def parse_transactions(response: List[dict]) -> dict:
     """
-    Строит summary по последним транзакциям: агрегирует топ токены, входящие/исходящие, крупные сделки, комиссии и другую активность.
-
+    Builds a summary of recent transactions: aggregates top tokens, incoming/outgoing, large trades, fees, and other activity.
+    
     Args:
-        response (list[dict]): Список транзакций (response из Helius API).
-
+    response (list[dict]): List of transactions (response from Helius API).
+    
     Returns:
-        dict: Словарь-резюме для дальнейшего анализа или формирования prompt.
-    """
+    dict: Summary dictionary for further analysis or prompt generation.
+	"""
     top_tokens = Counter()
     nft_ops = 0
     swaps = 0

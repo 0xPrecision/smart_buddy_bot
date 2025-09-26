@@ -9,12 +9,12 @@ from states.state import waiting_for_address
 @bot.message_handler(commands=["analyze"])
 def ask_for_address(message: Message) -> None:
     """
-    Обрабатывает команду /analyze. Запрашивает у пользователя адрес Solana-кошелька
-    и переводит пользователя в состояние ожидания ввода адреса.
-
+    Handles the /analyze command. Asks the user for a Solana wallet address
+    and switches the user to the state of waiting for address input.
+    
     Args:
-        message (telebot.types.Message): Объект входящего сообщения Telegram.
-    """
+    message (telebot.types.Message): Incoming Telegram message object.
+	"""
     user_id = message.from_user.id
     chat_id = message.chat.id
     waiting_for_address[user_id] = "analyze_query"

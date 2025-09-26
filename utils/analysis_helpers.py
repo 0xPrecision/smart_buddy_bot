@@ -13,15 +13,15 @@ from utils.misc.constants import END_TEXT
 
 def process_analyze_query(message: Message) -> None:
     """
-    Обрабатывает этап запроса адреса Solana-кошелька.
-
-    1. Проверяет валидность адреса через регулярное выражение.
-    2. Проверяет, был ли этот адрес уже проанализирован данным пользователем.
-    3. Если всё хорошо, запрашивает никнейм для этого кошелька.
-
+    Handles the stage of requesting a Solana wallet address.
+    
+    1. Validates the address using a regular expression.
+    2. Checks if this address has already been analyzed by the user.
+    3. If valid, requests a nickname for this wallet.
+    
     Args:
-        message (Message): Объект сообщения Telegram от пользователя.
-    """
+    message (Message): Telegram message object from the user.
+	"""
     user_id = message.from_user.id
     user = User.get(telegram_id=user_id)
     chat_id = message.chat.id
@@ -62,16 +62,16 @@ def process_analyze_query(message: Message) -> None:
 
 def process_nickname(message: Message) -> None:
     """
-    Обрабатывает этап ввода никнейма для Solana-кошелька.
-
-    1. Проверяет уникальность никнейма для этого пользователя.
-    2. Получает транзакции по кошельку через Helius API.
-    3. Формирует анализ и сохраняет его в базе.
-    4. Отправляет результат пользователю.
-
+    Handles the stage of entering a nickname for a Solana wallet.
+    
+    1. Checks the nickname's uniqueness for this user.
+    2. Fetches wallet transactions via the Helius API.
+    3. Generates the analysis and saves it to the database.
+    4. Sends the result to the user.
+    
     Args:
-        message (Message): Объект сообщения Telegram от пользователя.
-    """
+    message (Message): Telegram message object from the user.
+	"""
     user_id = message.from_user.id
     user = User.get(telegram_id=user_id)
     chat_id = message.chat.id

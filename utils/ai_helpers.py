@@ -6,15 +6,15 @@ from telebot.types import Message
 
 def analyze_wallet_with_ai(wallet_address: str, message: Message = None) -> str | None:
     """
-    Анализирует 100 транзакций Solana-кошелька через LLM и возвращает краткий AI-вывод.
-
+    Analyzes 100 Solana wallet transactions via LLM and returns a short AI summary.
+    
     Args:
-        wallet_address (str): Адрес Solana-кошелька для анализа.
-        message (Message, optional): Объект сообщения Telegram для уведомления об ошибках.
-
+    wallet_address (str): Solana wallet address to analyze.
+    message (Message, optional): Telegram message object for error notifications.
+    
     Returns:
-        str | None: Краткий аналитический вывод модели по кошельку или None в случае ошибки.
-    """
+    str | None: Short analytical model output for the wallet, or None in case of error.
+	"""
     response = get_transactions(wallet_address)
     info = parse_transactions(response)
 
@@ -41,14 +41,14 @@ def analyze_wallet_with_ai(wallet_address: str, message: Message = None) -> str 
 
 def build_wallet_prompt(info: dict) -> str:
     """
-    Формирует текстовый prompt для LLM на основе summary по транзакциям кошелька.
-
+    Builds a text prompt for LLM based on the transaction summary of a wallet.
+    
     Args:
-        info (dict): Словарь с агрегированной информацией по транзакциям (топ токены, баланс, входящие/исходящие, сделки, дропы и др.).
-
+    info (dict): Dictionary with aggregated transaction data (top tokens, balance, incoming/outgoing, trades, drops, etc.).
+    
     Returns:
-        str: Готовый текстовый prompt для языковой модели.
-    """
+    str: Ready-to-use text prompt for the language model.
+	"""
     return f"""
 Ответь на русском языке.
 Проанализируй активность Solana-кошелька по данным:

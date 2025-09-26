@@ -21,11 +21,11 @@ HELP_TEXT = (
 @bot.message_handler(commands=["help"])
 def send_help(message: Message) -> None:
     """
-    Отправляет пользователю подробную справку с командами и возможностями бота.
-
+    Sends the user detailed help with bot commands and features.
+    
     Args:
-        message (telebot.types.Message): Входящее сообщение Telegram от пользователя.
-    """
+    message (telebot.types.Message): Incoming Telegram message from the user.
+	"""
     bot.send_message(
         message.chat.id,
         HELP_TEXT,
@@ -37,10 +37,10 @@ def send_help(message: Message) -> None:
 @bot.callback_query_handler(func=lambda call: call.data == "help")
 def callback_help(call: CallbackQuery) -> None:
     """
-    Обрабатывает нажатие на inline-кнопку "Справка", отправляя пользователю справочное сообщение.
-
+    Handles the press on the "Help" inline button, sending the user a help message.
+    
     Args:
-        call (telebot.types.CallbackQuery): Callback-запрос от пользователя (по нажатию кнопки).
-    """
+    call (telebot.types.CallbackQuery): Callback query from the user (button press).
+	"""
     bot.answer_callback_query(call.id)
     bot.send_message(call.message.chat.id, HELP_TEXT, parse_mode="HTML")

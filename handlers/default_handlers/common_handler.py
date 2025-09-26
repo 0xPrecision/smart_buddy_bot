@@ -8,12 +8,12 @@ from utils.search_helpers import process_search_query
 @bot.message_handler(func=lambda m: waiting_for_address.get(m.from_user.id))
 def common_handler(message: Message) -> None:
     """
-    FSM-хендлер: обрабатывает все сообщения пользователя в активном диалоге (анализ, ввод никнейма, поиск).
-    Если пользователь введёт команду (начинается с "/"), получит предупреждение о необходимости завершить диалог.
-
+    FSM handler: processes all user messages in an active dialog (analysis, nickname input, search).
+    If the user enters a command (starting with "/"), they receive a warning about the need to finish the dialog.
+    
     Args:
-        message (telebot.types.Message): Входящее сообщение пользователя.
-    """
+    message (telebot.types.Message): Incoming user message.
+	"""
     user_id = message.from_user.id
     state = waiting_for_address.get(user_id)
 

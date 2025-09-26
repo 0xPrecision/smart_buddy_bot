@@ -5,11 +5,11 @@ from config_data.bot_instance import bot
 @bot.message_handler(func=lambda message: True)
 def handle_unknown_command(message: Message) -> None:
     """
-    Обработчик неизвестных команд вне активного диалога (FSM).
-
+    Handler for unknown commands outside of an active dialog (FSM).
+    
     Args:
-        message (Message): Сообщение пользователя.
-    """
+    message (Message): User message.
+	"""
     bot.send_message(
         message.chat.id,
         "❓ Неизвестная команда. Используй /help, чтобы посмотреть список доступных команд.",

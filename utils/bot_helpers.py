@@ -13,28 +13,28 @@ def on_timeout(
     "\nЧтобы начать заново, напиши команду или нажми /help.",
 ) -> None:
     """
-    Вызывается по истечении таймера ожидания действия пользователя.
-    Очищает состояние и отправляет уведомление в чат.
-
+    Called when the user action timeout expires.
+    Clears state and sends a notification to the chat.
+    
     Args:
-        user_id (int): Telegram ID пользователя.
-        chat_id (int): ID чата Telegram.
-        message (str, optional): Сообщение для отправки пользователю.
-    """
+    user_id (int): Telegram user ID.
+    chat_id (int): Telegram chat ID.
+    message (str, optional): Message to send to the user.
+	"""
     waiting_for_address.pop(user_id, None)
     bot.send_message(chat_id, message)
 
 
 def format_result(analysis: Analysis) -> str:
     """
-    Форматирует результат анализа для вывода пользователю.
-
+    Formats the analysis result for user output.
+    
     Args:
-        analysis (Analysis): Объект анализа из базы данных.
-
+    analysis (Analysis): Analysis object from the database.
+    
     Returns:
-        str: Готовый к отправке текст результата.
-    """
+    str: Ready-to-send text of the result.
+	"""
     short_address = shorten_address(analysis.wallet_address)
     return (
         f"Результат AI-анализа по кошельку {short_address} ({analysis.nickname}):\n\n"
@@ -45,15 +45,15 @@ def format_result(analysis: Analysis) -> str:
 
 def select_history(message: Message) -> Iterator[Analysis]:
     """
-    Получает список анализов пользователя по введённому адресу или никнейму.
-
+    Retrieves the list of user analyses by entered address or nickname.
+    
     Args:
-        message (Message): Сообщение Telegram с текстом-запросом.
-
+    message (Message): Telegram message containing the query text.
+    
     Returns:
-        Iterator[Analysis]: Итератор по объектам Analysis пользователя,
-        отсортированным по дате.
-    """
+    Iterator[Analysis]: Iterator of user's Analysis objects,
+    sorted by date.
+	"""
     user_id = message.from_user.id
     user = User.get(telegram_id=user_id)
     query = message.text
@@ -72,16 +72,16 @@ def select_history(message: Message) -> Iterator[Analysis]:
 
 def shorten_address(address: str, first: int = 6, last: int = 4) -> str:
     """
-    Сокращает длинный адрес кошелька для компактного вывода.
-
+    Shortens a long wallet address for compact display.
+    
     Args:
-        address (str): Адрес кошелька.
-        first (int): Количество символов в начале.
-        last (int): Количество символов в конце.
-
+    address (str): Wallet address.
+    first (int): Number of characters at the start.
+    last (int): Number of characters at the end.
+    
     Returns:
-        str: Сокращённый адрес вида "abcdef...wxyz"
-    """
+    str: Shortened address in the form "abcdef...wxyz"
+	"""
     if len(address) <= first + last:
         return address
     return f"{address[:first]}...{address[-last:]}"

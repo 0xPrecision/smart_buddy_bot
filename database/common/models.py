@@ -13,11 +13,11 @@ db = pw.SqliteDatabase(db_path)
 
 class BaseModel(pw.Model):
     """
-    Базовая модель для всех таблиц проекта.
-
-    Атрибуты:
-        Meta.database (peewee.Database): Ссылка на объект базы данных.
-    """
+    Base model for all project tables.
+    
+    Attributes:
+    Meta.database (peewee.Database): Reference to the database object.
+	"""
 
     class Meta:
         database = db
@@ -25,26 +25,26 @@ class BaseModel(pw.Model):
 
 class User(BaseModel):
     """
-    Модель пользователя Telegram-бота.
-
-    Атрибуты:
-        telegram_id (int): Уникальный идентификатор пользователя Telegram.
-    """
+    Model for a Telegram bot user.
+    
+    Attributes:
+    telegram_id (int): Unique Telegram user ID.
+	"""
 
     telegram_id = pw.IntegerField(unique=True)
 
 
 class Analysis(BaseModel):
     """
-    Модель анализа кошелька пользователя.
-
-    Атрибуты:
-        user (User): Ссылка на пользователя (внешний ключ).
-        wallet_address (str): Адрес Solana-кошелька.
-        nickname (str): Никнейм кошелька, заданный пользователем.
-        created_at (datetime): Дата и время создания анализа.
-        result (str): Текстовый результат анализа (например, отчёт по транзакциям).
-    """
+    Model for analyzing a user's wallet.
+    
+    Attributes:
+    user (User): Reference to the user (foreign key).
+    wallet_address (str): Solana wallet address.
+    nickname (str): Wallet nickname set by the user.
+    created_at (datetime): Date and time when the analysis was created.
+    result (str): Text result of the analysis (e.g., transaction report).
+	"""
 
     user = pw.ForeignKeyField(User, backref="analyses")
     wallet_address = pw.CharField()
