@@ -1,34 +1,27 @@
 import logging
 
-from database.common.models import db, User, Analysis
 from config_data.bot_instance import bot
-
-# Импорт обработчиков команд и общих хэндлеров, чтобы они зарегистрировались в TeleBot
-from handlers.default_handlers import (
-    start,  # /start — приветствие и регистрация пользователя
-    stop,  # /stop — отмена текущего диалога
-    help,  # /help — справка
-    common_handler,  # обработка состояний (fsm-like логика)
-    analyze,  # /analyze — запуск анализа кошелька
-    search_analysis,  # /search_analysis — поиск по истории анализов
-    history,  # /history — история анализов
-    clear_history,  # /clear_history — удалить историю анализов
-    unknown_command,  # обработка неизвестных команд
-)
-
-from utils.wait_timer import start_waiting_timer, cancel_timer
+from database.common.models import Analysis, User, db
+from handlers.default_handlers import (analyze, clear_history, common_handler,
+                                       help, history, search_analysis, start,
+                                       stop, unknown_command)
+from i18n.core import load_locales
+from i18n.middleware import install_locale_middleware
+from utils.wait_timer import cancel_timer, start_waiting_timer
 
 
 def main() -> None:
     """
     Entry point of the application. Starts polling for processing messages.
-	"""
+    """
     # Автоматически создаём таблицы, если их нет
     with db:
         db.create_tables([User, Analysis], safe=True)
 
+    load_locales("i18n/locales")
+    install_locale_middleware(bot)
     logging.basicConfig(level=logging.INFO)
-    print("Бот запущен")
+    print("Bot started")
     bot.infinity_polling(skip_pending=True)
 
 

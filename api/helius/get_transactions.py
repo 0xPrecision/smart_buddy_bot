@@ -1,7 +1,8 @@
-import requests
-from datetime import datetime
 from collections import Counter
+from datetime import datetime
 from typing import List
+
+import requests
 
 from config_data.env import HELIUS_API_KEY
 
@@ -9,13 +10,13 @@ from config_data.env import HELIUS_API_KEY
 def get_transactions(address: str) -> List[dict]:
     """
     Retrieves the latest transactions of a Solana wallet via the Helius API.
-    
+
     Args:
     address (str): Solana wallet address.
-    
+
     Returns:
     list[dict]: List of transactions in the format returned by the Helius API.
-	"""
+    """
     url = f"https://api.helius.xyz/v0/addresses/{address}/transactions"
     # в limit указывается количество транзакций для анализа (максимум 100)
     querystring = {"api-key": HELIUS_API_KEY, "limit": "100"}
@@ -27,13 +28,13 @@ def get_transactions(address: str) -> List[dict]:
 def parse_transactions(response: List[dict]) -> dict:
     """
     Builds a summary of recent transactions: aggregates top tokens, incoming/outgoing, large trades, fees, and other activity.
-    
+
     Args:
     response (list[dict]): List of transactions (response from Helius API).
-    
+
     Returns:
     dict: Summary dictionary for further analysis or prompt generation.
-	"""
+    """
     top_tokens = Counter()
     nft_ops = 0
     swaps = 0
@@ -49,7 +50,7 @@ def parse_transactions(response: List[dict]) -> dict:
         # 1. Дата
         dt = datetime.fromtimestamp(item.get("timestamp")).strftime("%Y-%m-%d %H:%M")
         # 2. Описание
-        desc = item.get("description", "нет описания")
+        desc = item.get("description", "no description")
         # 3. Тип транзакции
         tx_type = item.get("type", "")
         # 4. Суммы

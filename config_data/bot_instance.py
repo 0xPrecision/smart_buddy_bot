@@ -1,7 +1,6 @@
+from telebot import TeleBot, apihelper
+
 from config_data.env import TELEGRAM_BOT_TOKEN
 
-
-from telebot import TeleBot
-
-
+apihelper.ENABLE_MIDDLEWARE = True
 bot = TeleBot(TELEGRAM_BOT_TOKEN)
