@@ -1,209 +1,172 @@
-![Python](https://img.shields.io/badge/python-3.13%2B-blue?logo=python&logoColor=white)
+# SmartBuddy
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Telegram Bot](https://img.shields.io/badge/Telegram-bot-2CA5E0?logo=telegram)
+![Helius API](https://img.shields.io/badge/Helius-Solana%20API-6C47FF)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-AI%20analysis-FCC624)
+![Peewee](https://img.shields.io/badge/Peewee-ORM-2E8B57)
+![i18n](https://img.shields.io/badge/i18n-RU%20%2F%20EN-informational)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-active-success)
-![Platform](https://img.shields.io/badge/platform-Telegram-blue?logo=telegram&logoColor=white)
-![Code style: Black](https://img.shields.io/badge/code%20style-black-000000?logo=python&logoColor=white)
-![Imports: isort](https://img.shields.io/badge/imports-isort-ef8336?logo=python&logoColor=white)
-![Linter: Ruff](https://img.shields.io/badge/linter-ruff-e07a5f?logo=ruff&logoColor=white)
 
+> **SmartBuddy** — Telegram-бот для анализа Solana-кошельков с сохранением истории, поиском прошлых результатов и AI-сводкой на основе данных из Helius и Hugging Face.
 
-# 🧠 SmartBuddy — ваш ИИ-помощник для аналитики Solana-кошельков
+## Обзор проекта
 
-## О проекте
+**SmartBuddy** помогает анализировать активность Solana-кошельков через Telegram-интерфейс. Пользователь передаёт адрес кошелька, бот получает данные через **Helius API**, формирует сводку активности и дополняет её кратким AI-анализом.
 
-**SmartBuddy** — это Telegram-бот для анализа Solana-кошельков с использованием API Helius и AI-аналитики на базе больших языковых моделей (LLM, например Mixtral через Hugging Face).  
-Бот сохраняет и показывает историю ваших анализов, позволяет искать результаты по кошельку или нику, очищать историю и проводит пользователя через простой диалог на основе FSM.
+Проект ориентирован на локальный запуск и показывает практическую реализацию Telegram-бота с:
+- внешними API-интеграциями,
+- пошаговым пользовательским сценарием,
+- сохранением истории анализов,
+- поиском по прошлым результатам,
+- локализацией на русском и английском языках.
 
-Вместо того чтобы разбираться в сырых блокчейн-транзакциях, SmartBuddy помогает как новичкам, так и трейдерам быстро ориентироваться в активности кошельков и получать качественную, понятную аналитику (AI summary) без необходимости глубоко разбираться в блокчейне.  
-У бота также есть **встроенная поддержка нескольких языков (i18n)** — английский и русский доступны сразу.
+## Что уже реализовано
 
+- анализ Solana-кошельков через **Helius API**
+- AI-сводка по результатам анализа через **Hugging Face**
+- сохранение истории анализов пользователя
+- поиск прошлых анализов по адресу кошелька или нику
+- очистка истории анализов
+- пошаговый сценарий взаимодействия с пользователем
+- поддержка команд для запуска, справки, анализа, поиска и очистки истории
+- локализация интерфейса на русском и английском языках
+- автоматическое создание таблиц базы данных при первом запуске
 
----
+## Текущее состояние проекта
 
-## 📁 Структура проекта
+На текущем этапе проект представляет собой Telegram-бота для локального запуска в режиме polling.
 
-<details>
-<summary>Развернуть дерево проекта</summary>
+Что важно учитывать:
+- запуск выполняется через `main.py`
+- база данных и таблицы создаются автоматически при первом старте
+- проект не содержит Docker-конфигурации и автоматизированных тестов
+- бот ориентирован на работу через `.env` и локальное окружение
+- текущая реализация сосредоточена на анализе, истории и поиске, а не на расширенной инфраструктуре
 
+## Технологический стек
+
+- **Python**
+- **pyTelegramBotAPI** для логики Telegram-бота
+- **Peewee** для моделей и работы с базой данных
+- **requests** для HTTP-запросов к внешним API
+- **python-dotenv** для загрузки переменных окружения
+- **Helius API** для получения данных по Solana-кошелькам
+- **Hugging Face API** для генерации AI-аналитики
+
+## Структура проекта
+
+```text
+smart_buddy_bot/
+├── api/                    # интеграции с внешними API
+│   ├── helius/             # получение и обработка транзакций
+│   └── hugging_face/       # генерация AI-анализа
+├── config_data/            # конфигурация и инициализация бота
+├── database/               # модели и работа с базой данных
+├── handlers/               # обработчики команд и пользовательских сценариев
+├── i18n/                   # локализация и middleware перевода
+├── keyboards/              # инлайн-кнопки
+├── states/                 # состояния пользовательского сценария
+├── utils/                  # вспомогательные функции
+├── main.py                 # точка входа и запуск polling
+└── requirements.txt        # зависимости проекта
 ```
-📦 smart_buddy_bot/
-├── api/
-│   ├── helius/
-│   │   ├── __init__.py
-│   │   └── get_transactions.py
-│   └── hugging_face/
-│       ├── __init__.py
-│       └── get_ai_analyze.py
-├── config_data/
-│   ├── __init__.py
-│   ├── bot_instance.py
-│   └── env.py
-├── database/
-│   └── common/
-│       ├── __init__.py
-│       └── models.py
-├── handlers/
-│   └── default_handlers/
-│       ├── __init__.py
-│       ├── analyze.py
-│       ├── clear_history.py
-│       ├── common_handler.py
-│       ├── help.py
-│       ├── history.py
-│       ├── search_analysis.py
-│       ├── start.py
-│       └── stop.py
-├── i18n/
-│   ├── locales/
-│   │   ├── en.json
-│   │   └── ru.json
-│   ├── __init__.py
-│   ├── core.py
-│   ├── formatting.py
-│   └── middleware.py
-├── keyboards/
-│   └── inline/
-│       ├── __init__.py
-│       └── help_button.py
-├── states/
-│   ├── __init__.py
-│   └── state.py
-├── utils/
-│   └── misc/
-│       ├── __init__.py
-│       ├── ai_helpers.py
-│       ├── analysis_helpers.py
-│       ├── bot_helpers.py
-│       ├── constants.py
-│       ├── search_helpers.py
-│       └── wait_timer.py
-├── .env
-├── .gitignore
-├── LICENSE
-├── main.py
-├── readme.md
-└── requirements.txt
+
+## Основные сущности
+
+- **User** — данные пользователя Telegram
+- **Analysis** — сохранённый результат анализа кошелька
+
+## Быстрый старт
+
+### 1. Клонируйте репозиторий
+
+```bash
+git clone https://github.com/0xPrecision/smart_buddy_bot.git
+cd smart_buddy_bot
 ```
-</details>
 
----
+### 2. Создайте виртуальное окружение
 
-## 🗂️ Ключевые модули и их назначение:
+```bash
+python -m venv venv
+source venv/bin/activate
+```
 
-- **`api/helius/get_transactions.py`** — получает транзакции кошелька через API Helius и формирует сводку активности.  
-- **`api/hugging_face/get_ai_analyze.py`** — обёртка над API Hugging Face для генерации AI-аналитики.  
-- **`config_data/env.py`** — загружает переменные окружения из `.env`.  
-- **`database/common/models.py`** — модели Peewee (`User`, `Analysis`).  
-- **`handlers/default_handlers/`** — обработчики команд бота (`/start`, `/help`, `/analyze`, `/search_analysis`, `/history`, `/clear_history`, `/stop`).  
-- **`handlers/default_handlers/common_handler.py`** — логика FSM-диалога (адрес, ник и т.д.).
-- **`i18n/locales/`** — файлы переводов в формате JSON.
-  - `core.py` —  ядро системы локализации: загружает словари, управляет выбором языка, предоставляет функцию `t()` и безопасное форматирование строк.
-  - `i18n/formatting.py` — вспомогательные функции для форматирования дат, валют и чисел в зависимости от локали.  
-  - `i18n/middleware.py` — middleware для интеграции i18n в Telegram-бота: определяет язык пользователя и автоматически применяет переводы.  
-- **`keyboards/inline/help_button.py`** — инлайн-кнопка «Help».  
-- **`states/state.py`** — состояния FSM (`waiting_for_address`, `pending_address`).  
-- **`utils/misc/constants.py`** — константы (например, `TIMEOUT_SECONDS`).  
-- **`utils/`** — вспомогательные модули:  
-  - `ai_helpers.py` — интеграция AI/LLM  
-  - `analysis_helpers.py` — обработка шагов FSM  
-  - `bot_helpers.py` — Telegram-утилиты, форматирование  
-  - `search_helpers.py` — вспомогательные функции поиска по БД  
-  - `wait_timer.py` — обработка таймаутов пользователя  
+Для Windows:
 
-Другие файлы проекта:  
-- **`.env`** — секреты (никогда не коммитьте).  
-- **`.gitignore`** — правила игнорирования Git (окружения, кэш, БД, конфиги IDE).  
-- **`main.py`** — точка входа: инициализация БД + цикл polling.  
-- **`requirements.txt`** — зависимости. 
+```bash
+venv\Scripts\activate
+```
 
+### 3. Установите зависимости
 
----
+```bash
+pip install -r requirements.txt
+```
 
-## 🚀 Быстрый старт
+### 4. Создайте файл `.env`
 
-1. **Клонируйте репозиторий и перейдите в директорию проекта:**
-    ```bash
-    git clone https://github.com/st-saw/smartbuddy.git
-    cd smart_buddy_bot
-    ```
+Минимальный пример:
 
-2. **Создайте виртуальное окружение (рекомендуется):**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # или .\venv\Scripts\activate для Windows
-    ```
+```env
+TELEGRAM_BOT_TOKEN=your_bot_token
+HELIUS_API_KEY=your_helius_key
+HUGGING_FACE_TOKEN=your_hugging_face_token
+```
 
-3. **Установите зависимости:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+### 5. Запустите бота
 
-4. **Создайте файл `.env` и добавьте свои ключи:**
-    ```
-    TELEGRAM_BOT_TOKEN=your_bot_token
-    HELIUS_API_KEY=your_helius_key
-    HUGGING_FACE_TOKEN=your_hugging_face_token
-    ```
+```bash
+python main.py
+```
 
-5. **Запустите бота:**
-    ```bash
-    python main.py
-    ```
+При первом запуске бот автоматически создаст таблицы базы данных, если они ещё не существуют.
 
-    При первом запуске база данных и таблицы будут созданы автоматически.
+## Основные команды
 
----
+- `/start` — запуск бота и регистрация пользователя
+- `/help` — справка по возможностям бота
+- `/analyze` — анализ кошелька по адресу
+- `/search_analysis` — поиск сохранённого анализа
+- `/history` — просмотр истории анализов
+- `/clear_history` — очистка истории
+- `/stop` — отмена текущего сценария
 
-## ⚡ Основные команды бота
+## Как работает сценарий анализа
 
-- `/start` — запустить бота и зарегистрироваться  
-- `/help` — показать это справочное сообщение  
-- `/analyze` — проанализировать Solana-кошелёк по адресу  
-- `/search_analysis` — найти предыдущий анализ по кошельку или нику  
-- `/history` — посмотреть историю анализов  
-- `/clear_history` — очистить историю анализов  
-- `/stop` — отменить текущий диалог  
+1. Пользователь запускает команду анализа
+2. Вводит адрес Solana-кошелька
+3. При необходимости указывает ник
+4. Бот получает данные через Helius API
+5. Формирует AI-сводку
+6. Сохраняет результат в историю пользователя
+7. Позволяет позже найти анализ через поиск или открыть историю
 
----
+## Локализация
 
-## 🧩 Как работает диалог (FSM)
+Проект поддерживает два языка интерфейса:
+- **русский**
+- **английский**
 
-SmartBuddy использует **пошаговый диалог** (finite state machine), чтобы вести пользователя по процессу:  
-1. Введите адрес кошелька  
-2. Выберите ник  
-3. Получите результаты анализа  
+Файлы переводов находятся в `i18n/locales/`, а сама локализация подключается через middleware и вспомогательные функции внутри каталога `i18n/`.
 
-Вы можете выйти из сценария в любой момент с помощью `/stop`.
+## Что можно улучшить дальше
 
----
+- добавить Docker-конфигурацию для развёртывания
+- покрыть ключевые сценарии автоматическими тестами
+- расширить сценарии анализа и фильтрации результатов
+- улучшить форматирование и представление аналитики
+- добавить дополнительные команды и пользовательские сценарии
+- подготовить более явную конфигурацию проекта через `.env.example`
 
-## 🌍 Интернационализация (i18n)
+## Автор и поддержка
 
-- Готовые **английский и русский переводы** (`i18n/locales/en.json`, `ru.json`)  
-- Лёгкое расширение под любой другой язык через добавление новых JSON-файлов  
-- В комплекте есть вспомогательные функции перевода и middleware (`core.py`, `middleware.py`, `formatting.py`)  
+- Telegram: [@OxPrecision](https://t.me/OxPrecision)
 
----
+## Лицензия
 
-## 👨‍💻 Автор и поддержка
-
-Telegram: [@OxPrecision](https://t.me/OxPrecision)
-
----
-
-## 🛡️ Важно
-
-- **Не публикуйте свои секретные ключи!**  
-- Файл `.env` должен быть добавлен в `.gitignore`.  
-- Настраивайте и расширяйте проект под свои задачи!  
-
----
-
-## 📄 Лицензия
-
-Этот проект распространяется по лицензии MIT. Подробнее смотрите в файле [LICENSE](./LICENSE).
-
-**Удачи в анализе Solana-кошельков с SmartBuddy! 🚀**
+Проект распространяется по лицензии [MIT](LICENSE).
 
 ---
 
